@@ -1,19 +1,5 @@
 import { connection } from "../config/db.js";
 
-// export const getAllAccessory = (req, res) => {
-//   connection.query(
-//     "SELECT accessory.id, accessory.name, accessory.companyName, accessory.description, " +
-//       "accessory.price, accessory.quantity, accessory.category, accessory.status, user.emailId " +
-//       "FROM ACCESSORY accessory " +
-//       "inner join user user " +
-//       "on accessory.employeeId = user.id",
-//     (error, result) => {
-//       if (error) return res.status(500).send(error.message);
-//       res.status(200).send(result);
-//     },
-//   );
-// };
-
 export const getAllAccessory = (req, res) => {
   connection.query(
     "SELECT accessory.id, accessory.name, accessory.companyName, accessory.description, " +
@@ -29,7 +15,7 @@ export const getAllAccessory = (req, res) => {
 
 export const deleteAccessoryById = (req, res) => {
   connection.query(
-    "DELETE FROM ACCESSORY WHERE ID = ?",
+    "DELETE FROM accessory WHERE id = ?",
     req.params.id,
     (error, result) => {
       if (error) return res.status(500).send(error.message);
@@ -42,7 +28,7 @@ export const deleteAccessoryById = (req, res) => {
 
 export const getCurrentAccessoryById = (req, res) => {
   connection.query(
-    "SELECT * FROM ACCESSORY WHERE ID = ?",
+    "SELECT * FROM accessory WHERE id = ?",
     req.params.id,
     (error, result) => {
       if (error) return res.status(500).send(error.message);
@@ -50,38 +36,6 @@ export const getCurrentAccessoryById = (req, res) => {
     },
   );
 };
-
-// export const createAccessory = (req, res) => {
-//   const {
-//     name,
-//     companyName,
-//     description,
-//     price,
-//     category,
-//     status,
-//     employeeId,
-//     quantity,
-//   } = req.body;
-//   connection.query(
-//     "INSERT INTO ACCESSORY SET NAME = ?, COMPANYNAME= ?, DESCRIPTION=?, PRICE=?, CATEGORY=?, STATUS=?, EMPLOYEEID=?, QUANTITY=?",
-//     [
-//       name,
-//       companyName,
-//       description,
-//       price,
-//       category,
-//       status,
-//       employeeId,
-//       quantity,
-//     ],
-//     (error, result) => {
-//       if (error) return res.status(500).send(error.message);
-//       if (result.affectedRows === 1) {
-//         res.status(201).send("Accessory Created Successfully");
-//       }
-//     },
-//   );
-// };
 
 export const createAccessory = (req, res) => {
   const {
@@ -114,6 +68,7 @@ export const createAccessory = (req, res) => {
     },
   );
 };
+
 export const updateAccessory = async (req, res) => {
   const {
     id,
@@ -122,16 +77,12 @@ export const updateAccessory = async (req, res) => {
     description,
     price,
     category,
-    status,
     quantity,
     employeeId,
   } = req.body;
-
   const newStatus = quantity > 0 ? "Y" : "N";
-
   connection.query(
-    "UPDATE ACCESSORY SET NAME = ?, COMPANYNAME = ?, DESCRIPTION = ?, " +
-      "PRICE = ?, CATEGORY = ?, STATUS = ?, QUANTITY = ?, EMPLOYEEID = ? WHERE ID = ?",
+    "UPDATE accessory SET name=?, companyName=?, description=?, price=?, category=?, status=?, quantity=?, employeeId=? WHERE id=?",
     [
       name,
       companyName,
@@ -151,13 +102,13 @@ export const updateAccessory = async (req, res) => {
     },
   );
 };
+
 export const getEmployeeIdByEmailId = (emailId) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      "select accessory.employeeId from accessory " +
-        "inner join user " +
-        "on accessory.employeeId = user.id " +
-        "where user.emailId = ?",
+      "SELECT accessory.employeeId FROM accessory " +
+        "INNER JOIN user ON accessory.employeeId = user.id " +
+        "WHERE user.emailId = ?",
       [emailId],
       (error, result) => {
         if (error) return reject(error);
@@ -170,7 +121,7 @@ export const getEmployeeIdByEmailId = (emailId) => {
 
 export const getAllActiveAccessory = (req, res) => {
   connection.query(
-    "SELECT * FROM ACCESSORY WHERE STATUS= ?",
+    "SELECT * FROM accessory WHERE status = ?",
     "Y",
     (error, result) => {
       if (error) return res.status(500).send(error.message);
