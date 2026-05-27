@@ -1,12 +1,25 @@
 import { connection } from "../config/db.js";
 
+// export const getAllAccessory = (req, res) => {
+//   connection.query(
+//     "SELECT accessory.id, accessory.name, accessory.companyName, accessory.description, " +
+//       "accessory.price, accessory.quantity, accessory.category, accessory.status, user.emailId " +
+//       "FROM ACCESSORY accessory " +
+//       "inner join user user " +
+//       "on accessory.employeeId = user.id",
+//     (error, result) => {
+//       if (error) return res.status(500).send(error.message);
+//       res.status(200).send(result);
+//     },
+//   );
+// };
+
 export const getAllAccessory = (req, res) => {
   connection.query(
     "SELECT accessory.id, accessory.name, accessory.companyName, accessory.description, " +
       "accessory.price, accessory.quantity, accessory.category, accessory.status, user.emailId " +
-      "FROM ACCESSORY accessory " +
-      "inner join user user " +
-      "on accessory.employeeId = user.id",
+      "FROM accessory " +
+      "LEFT JOIN user ON accessory.employeeId = user.id",
     (error, result) => {
       if (error) return res.status(500).send(error.message);
       res.status(200).send(result);
