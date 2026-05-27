@@ -5,11 +5,22 @@ export const getAllUser = (req, res) => {
     res.status(200).send(result);
   });
 };
+// export const getCurrentUserById = (req, res) => {
+//   connection.query(
+//     "SELECT * FROM USER WHERE ID = ?",
+//     req.params.id,
+//     (error, result) => {
+//       res.status(200).send(result[0]);
+//     },
+//   );
+// };
+
 export const getCurrentUserById = (req, res) => {
   connection.query(
-    "SELECT * FROM USER WHERE ID = ?",
+    "SELECT * FROM user WHERE id = ?",
     req.params.id,
     (error, result) => {
+      if (error) return res.status(500).send(error.message);
       res.status(200).send(result[0]);
     },
   );
