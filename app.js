@@ -13,7 +13,14 @@ app.listen(8080, (error, result) => {
   console.log("Server is running on 8080");
 });
 
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: "https://intelliauto-frontend.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  }),
+);
 
 app.use(express.json());
 app.use("/notification", notificationRouter);
