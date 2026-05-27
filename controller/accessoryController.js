@@ -51,6 +51,38 @@ export const getCurrentAccessoryById = (req, res) => {
   );
 };
 
+// export const createAccessory = (req, res) => {
+//   const {
+//     name,
+//     companyName,
+//     description,
+//     price,
+//     category,
+//     status,
+//     employeeId,
+//     quantity,
+//   } = req.body;
+//   connection.query(
+//     "INSERT INTO ACCESSORY SET NAME = ?, COMPANYNAME= ?, DESCRIPTION=?, PRICE=?, CATEGORY=?, STATUS=?, EMPLOYEEID=?, QUANTITY=?",
+//     [
+//       name,
+//       companyName,
+//       description,
+//       price,
+//       category,
+//       status,
+//       employeeId,
+//       quantity,
+//     ],
+//     (error, result) => {
+//       if (error) return res.status(500).send(error.message);
+//       if (result.affectedRows === 1) {
+//         res.status(201).send("Accessory Created Successfully");
+//       }
+//     },
+//   );
+// };
+
 export const createAccessory = (req, res) => {
   const {
     name,
@@ -63,7 +95,7 @@ export const createAccessory = (req, res) => {
     quantity,
   } = req.body;
   connection.query(
-    "INSERT INTO ACCESSORY SET NAME = ?, COMPANYNAME= ?, DESCRIPTION=?, PRICE=?, CATEGORY=?, STATUS=?, EMPLOYEEID=?, QUANTITY=?",
+    "INSERT INTO accessory SET name=?, companyName=?, description=?, price=?, category=?, status=?, employeeId=?, quantity=?",
     [
       name,
       companyName,
@@ -82,7 +114,6 @@ export const createAccessory = (req, res) => {
     },
   );
 };
-
 export const updateAccessory = async (req, res) => {
   const {
     id,
