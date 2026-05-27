@@ -50,7 +50,7 @@
 //   }
 // });
 
-import mysql from "mysql";
+import mysql from "mysql2";
 
 export const connection = mysql.createConnection({
   host: process.env.MYSQLHOST || "mysql.railway.internal",
